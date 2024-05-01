@@ -13,23 +13,39 @@ const App=()=>{
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchJobs(10, 0); // Fetching 10 jobs starting from offset 0
+        const data = await fetchJobs(10, 0); 
         setJobs(data.jdList);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        // Handle error
+        
       }
     };
 
     fetchData();
   }, []);
 
+  const renderJobCards = () => {
+    
+    const jobSets = [];
+    for (let i = 0; i < jobs.length; i += 3) {
+      jobSets.push(jobs.slice(i, i + 3));
+    }
+
+   
+    return jobSets.map((jobSet, index) => (
+      <div key={index} style={{ display: 'flex', justifyContent: 'space-between', margin:"30px" }}>
+        {jobSet.map(job => (
+          <JobCard key={job.jdUid} job={job} />
+        ))}
+      </div>
+    ));
+  };
+
+
   return(
-    <div>
-      {jobs.map((job) => (
-        <JobCard key={job.jdUid} job={job} />
-      ))}
+    <div >
+      {renderJobCards()}
     </div>
   );
 
