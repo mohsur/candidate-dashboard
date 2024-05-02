@@ -8,13 +8,15 @@ const FilterBar = () => {
   const filter = useSelector(state => state.filter);
 
   const handleFilterChange = (event) => {
-    const { name, value } = event.target;
-    dispatch(updateFilter({ [name]: value }));
+    const filterType = event.target.name;
+    const filterValue = event.target.value;
+    const updatedFilter = { ...filter, [filterType]: filterValue };
+    dispatch(updateFilter(updatedFilter));
   };
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap',gap:"10px",padding:"30px" }}>
-  <div style={{  width:"150px"}}>
+  <div style={{  width:"180px",height:"20px"}}>
     <TextField
       label="Min Experience"
       name="minExperience"
@@ -23,7 +25,7 @@ const FilterBar = () => {
       variant="outlined"
     />
   </div>
-  <div style={{ width:"150px" }}>
+  <div style={{ width:"180px" ,height:"30px" }}>
     <TextField
       label="Company Name"
       name="companyName"
@@ -32,7 +34,7 @@ const FilterBar = () => {
       variant="outlined"
     />
   </div>
-  <div style={{ width:"150px"  }}>
+  <div style={{ width:"180px" ,height:"30px"  }}>
     <TextField
       label="Location"
       name="location"
@@ -50,13 +52,12 @@ const FilterBar = () => {
         onChange={handleFilterChange}
         label="Remote/On-site"
       >
-        <MenuItem value="">All</MenuItem>
         <MenuItem value="remote">Remote</MenuItem>
         <MenuItem value="onsite">On-site</MenuItem>
       </Select>
     </FormControl>
   </div>
-  <div style={{width:"150px" }}>
+  <div style={{width:"180px" ,height:"30px" }}>
     <TextField
       label="Tech Stack"
       name="techStack"
@@ -66,22 +67,15 @@ const FilterBar = () => {
     />
   </div>
   <div >
-    <FormControl variant="outlined" style={{ width:"150px"}}>
-      <InputLabel>Role</InputLabel>
-      <Select
-        name="role"
-        value={filter.role}
-        onChange={handleFilterChange}
-        label="Role"
-      >
-        <MenuItem value="">All</MenuItem>
-        <MenuItem value="developer">Developer</MenuItem>
-        <MenuItem value="designer">Designer</MenuItem>
-        {/* Add more roles */}
-      </Select>
-    </FormControl>
+  <TextField
+      label="Role"
+      name="role"
+      value={filter.role}
+      onChange={handleFilterChange}
+      variant="outlined"
+    />
   </div>
-  <div style={{ width:"150px" }}>
+  <div style={{ width:"180px" ,height:"30px" }}>
     <TextField
       label="Min Base Pay"
       name="minBasePay"
@@ -90,7 +84,6 @@ const FilterBar = () => {
       variant="outlined"
     />
   </div>
-  <Button variant="contained" color="primary" style={{ width:"150px" }} >Apply Filters</Button>
 </div>
 
   );

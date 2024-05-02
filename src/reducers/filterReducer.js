@@ -1,13 +1,14 @@
 import { UPDATE_FILTER } from '../actions/actions.js';
 
 const initialState = {
-  minExperience: '',
-  companyName: '',
-  location: '',
-  remote: '',
-  techStack: '',
-  role: '',
-  minBasePay: ''
+    jobs: [],
+    minExperience: '',
+    companyName: '',
+    location: '',
+    remote: '',
+    techStack: '',
+    role: '',
+    minBasePay: ''
 };
 
 const filterReducer = (state = initialState, action) => {
