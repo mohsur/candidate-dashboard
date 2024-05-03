@@ -1,0 +1,96 @@
+.job-card {
+    border-radius: 12px;
+    max-height: 652.516px;
+    max-width: 360px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card:hover {
+    border-color: #19d26f;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .company-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .card-title {
+    margin-bottom: 8px;
+  }
+  
+  .card-subheader {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .see-more-button {
+    position:relative !important ; 
+    margin-top: -24px !important ;
+    background-color: rgba(255, 255, 255, 0.9) !important ;
+    border-radius: 4px !important ;
+    padding: 8px 16px !important ;
+    z-index: 1 !important ; 
+    color:rgb(33, 97, 245) !important ;
+  }
+
+  .see-more-button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .about-company {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2px;
+  }
+  
+  .job-details {
+    max-height: 5.5em;
+    overflow: hidden;
+  }
+  
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  
+  .min-exp {
+    margin-top: 5px;
+  }
+  
+  .easyApply {
+    background-color: rgb(85, 239, 196) !important;
+    margin-top: 10px !important;
+  }
+
+  .unlockReferral {
+    background-color: rgb(73, 67, 218) !important;
+    margin-top: 10px !important;
+    color:#ddd !important;
+  }
+
+  .easyApply:hover{
+    background-color: rgb(85, 239, 196) !important;
+  }
+
+  .unlockReferral:hover{
+    background-color: rgb(73, 67, 218) !important;
+  }
+
+  @media (max-width: 360px) {
+    .job-card {
+      max-width: 100%;
+    }
+  }

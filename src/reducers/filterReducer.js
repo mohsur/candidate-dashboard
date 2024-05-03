@@ -1,18 +1,20 @@
 import { UPDATE_FILTER } from '../actions/actions.js';
 
+
 const initialState = {
     jobs: [],
-    minExperience: '',
-    companyName: '',
-    location: '',
-    remote: '',
-    techStack: '',
-    role: '',
-    minBasePay: ''
+    minExperience: "",
+    companyName: "",
+    location: "",
+    remote: "",
+    techStack: "",
+    role: "",
+    minBasePay: ""
 };
 
 const filterReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case UPDATE_FILTER:
       return {
         ...state,
