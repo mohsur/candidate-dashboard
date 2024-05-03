@@ -1,0 +1,12 @@
+.job-grid {
+    margin-left:20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+    gap: 30px;
+    align-items: center;
+}
+.filter-bar{
+    position: sticky;
+    z-index:1000;
+    top: 0;
+}

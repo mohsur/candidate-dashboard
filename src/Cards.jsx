@@ -2,9 +2,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateJobs } from './actions/actions';
 import { store } from './store';
 import FilterBar from './components/filterBar';
-import JobCard from './components/JobCard';
+import JobCard from './components/jobCard';
 import fetchJobs from './service';
 import { useEffect, useState } from 'react';
+import "./Cards.css"
 
 
 const Cards = () => {
@@ -22,24 +23,19 @@ const Cards = () => {
       const fetchData = async () => {
         try {
           const data = await fetchJobs(10, 0);
-          if (data.jdList.length > 0) {
             dispatch(updateJobs(data.jdList));
-            setPage(page + 1);
-          } else {
-            setHasMore(false);
+            setPage(2);
+            setLoading(false);
+            setHasMore(data.jdList.length > 0);
           }
-          setLoading(false);
-        } catch (error) {
+        catch (error) {
           setLoading(false);
           setError(true);
           console.error('Error fetching data:', error);
         }
       };
-  
-      if (loading && hasMore) {
         fetchData();
-      }
-    }, [dispatch, loading, page, hasMore]);
+    }, [dispatch]);
   
 
     useEffect(() => {
@@ -48,22 +44,42 @@ const Cards = () => {
           window.innerHeight + document.documentElement.scrollTop ===
           document.documentElement.offsetHeight
         ) {
-          setLoading(true);
+          if (!loading && hasMore) {
+            setLoading(true);
+        }
         }
       };
   
       window.addEventListener('scroll', handleScroll);
       return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [loading, hasMore]);
   
+    useEffect(() => {
+      const fetchFilteredJobs = async () => {
+          try {
+              const data = await fetchJobs(10, (page - 1) * 10);
+              dispatch(updateJobs([...jobs, ...data.jdList]));
+              setPage(page + 1);
+              setLoading(false);
+              setHasMore(data.jdList.length>0)
+          } catch (error) {
+              setLoading(false);
+              setError(true);
+              console.error('Error fetching filtered jobs:', error);
+          }
+      };
 
+      if (!loading && !error && hasMore) {
+          fetchFilteredJobs();
+      }
+  }, [dispatch, filters, page]);
     
     const renderJobCards = () => {
       if (!jobs) return null;
   
       const filteredJobs = jobs.filter(job => {
       
-        if (filters.minExperience && job.minExp < filters.minExperience) {
+        if (filters.minExperience && job.minExp <filters.minExperience) {
           return false;
         }
   
@@ -75,13 +91,17 @@ const Cards = () => {
           return false;
         }
   
-        if (filters.remote && job.location !== filters.remote) {
+        if (filters.remote && filters.remote === "remote" && job.location !== "remote") {
+          return false;
+        }
+    
+        if (filters.remote && filters.remote === "onsite" && job.location === "remote") {
           return false;
         }
   
-        if (filters.techStack && !job.techStack.includes(filters.techStack)) {
-          return false;
-        }
+        // if (filters.techStack && !job.techStack.includes(filters.techStack)) {
+        //   return false;
+        // }
   
         if (filters.role && job.jobRole !== filters.role) {
           return false;
@@ -93,19 +113,15 @@ const Cards = () => {
   
         return true;
       });
+      
   
-      const jobSets = [];
-      for (let i = 0; i < jobs.length; i += 3) {
-        jobSets.push(filteredJobs.slice(i, i + 3));
-      }
-  
-      return jobSets.map((jobRow, index) => (
-        <div key={index} style={{ display: 'flex', justifyContent: 'space-between', margin: '30px' }}>
-          {jobRow.map((job) => (
-            <JobCard key={job.jdUid} job={job} />
-          ))}
+      return (
+      <div className="job-grid">
+            {filteredJobs.map((job, index) => (
+                <JobCard job={job} />
+            ))}
         </div>
-      ));
+      )
     };
   
     return (
@@ -117,6 +133,7 @@ const Cards = () => {
             <div>Error fetching jobs.</div>
           ) : (
             renderJobCards()
+
           )}
         </div>
     );
